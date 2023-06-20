@@ -1,0 +1,16 @@
+#!/bin/bash
+# This hook is run after this virtualenv is activated.
+
+export PYTHONPATH="/webapps/Diploma"
+export LOG_PATH="/webapps/Diploma/logs"
+export LOG_LEVEL=ERROR
+
+# App variables
+export APP_HOST=127.0.0.1
+export APP_PORT=5000
+export SERVICE_NAME=Diploma
+
+# Flask variables
+export FLASK_APP=Diploma
+export FLASK_ENV=development
+export JWT_SECRET=cAtwa1kkEy

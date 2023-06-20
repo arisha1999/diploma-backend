@@ -1,0 +1,11 @@
+#!/bin/bash
+# This hook is run before this virtualenv is deactivated.
+
+unset PYTHONPATH
+unset LOG_PATH
+unset LOG_LEVEL
+
+# Flask variables
+unset FLASK_APP
+unset FLASK_ENV
+unset JWT_SECRET
