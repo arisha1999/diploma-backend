@@ -146,3 +146,6 @@ wrapt==1.11.1
 wsproto==1.2.0
 zipp==3.4.0
 zstandard==0.20.0
+pydub=0.25.1
+padasip=1.2.2
+librosa=0.10.0.post2
