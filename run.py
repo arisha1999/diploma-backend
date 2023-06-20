@@ -12,7 +12,6 @@ from app.utils.log import StubbedGunicornLogger, configure_logs
 def number_of_workers():
     return (multiprocessing.cpu_count() * 2) + 1
 
-
 class FlaskApplication(gunicorn.app.base.BaseApplication):
 
     def __init__(self, app, options=None):
