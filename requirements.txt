@@ -115,7 +115,7 @@ pytz==2019.1
 pytzdata==2019.1
 PyYAML==5.1.1
 redis==3.4.1
-requests==
+requests==2.31.0
 requests-oauthlib==1.3.0
 retrying==1.3.3
 rq==1.3.0
@@ -137,7 +137,7 @@ trio-websocket==0.10.2
 typing==3.6.6
 tzlocal==1.5.1
 Unidecode==1.1.1
-urllib3==
+urllib3==2.0.3
 validate-email==1.3
 virtualenv==20.20.0
 virtualenv-clone==0.5.7
