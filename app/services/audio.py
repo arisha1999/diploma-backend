@@ -119,8 +119,7 @@ class AudioService:
     def predictScipy(signal, modelPath):
         model = joblib.load(modelPath)
         value = model.predict(signal)
-
-        return valueS
+        return value
 
     @staticmethod
     def reduct_noise(noiseRecutionType, audio):
@@ -137,19 +136,28 @@ class AudioService:
             result = AudioService.adaptiveNoiseRecution(noiseRecutionType, signal, sample_rate)
         elif noiseRecutionType == 'nlms':
             result = AudioService.adaptiveNoiseRecution(noiseRecutionType, signal, sample_rate)
+        else:
+            result = signal
         write(audio, sample_rate, result)
         return librosa.get_duration(y=signal, sr=sample_rate)
     
     @staticmethod
     def prepareAudio(audio, dataType):
         if dataType == 'mfcc':
-            return AudioService.extract_mfcc_features(audio)
+            features = AudioService.extract_mfcc_features(audio)
+            features = np.array(features).ravel().reshape(1, -1)
+            return features
         elif dataType == 'fcc':
-            return AudioService.extract_fcc_features(audio)
+            features = np.array(AudioService.extract_fcc_features(audio)).reshape(1,-1)
+            print(features.shape)
+            return features
         elif dataType == 'fft':
-            return AudioService.extract_fft_features(audio)
+            features = np.array(AudioService.extract_fft_features(audio)).reshape(-1,1)
+            print(features.shape)
+            return features
         elif dataType == 'stft':
-            return AudioService.extract_stft_features(audio)
+            features = AudioService.extract_stft_features(audio)
+            return features
 
     @staticmethod
     def predict(signal, modelPath, libType):
