@@ -20,3 +20,4 @@ groups.yml
 audio.mp3
 models/
 audio_chunks/
+speech_commands/

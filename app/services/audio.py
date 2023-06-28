@@ -74,17 +74,17 @@ class AudioService:
     
     @staticmethod
     def extract_mfcc_features(audio):
+        """Extracts MFCC coefficients as features from the audio data."""
         signal, sample_rate = librosa.load(audio, sr=SAMPLE_RATE)
         mfcc = librosa.feature.mfcc(y=signal, sr=sample_rate, n_fft=int(WINDOW_SIZE * SAMPLE_RATE), hop_length=int(HOP_SIZE * SAMPLE_RATE), n_mfcc=NUM_COEFFICIENTS)
-        print(mfcc.shape)
+        mfcc = [ np.hstack([x,np.zeros(150-len(x))]) if len(x) < 150 else x[:150] for x in mfcc]
         return mfcc
-    
+
     @staticmethod
     def extract_fcc_features(audio):
         signal, sample_rate = librosa.load(audio, sr=SAMPLE_RATE)
         spectrum = np.fft.fft(signal, n=SAMPLE_RATE)
         ceps = np.fft.ifft(np.log(np.abs(spectrum))).real
-        print(ceps.shape)
         return ceps
 
     @staticmethod
@@ -93,14 +93,20 @@ class AudioService:
         fft = np.fft.fft(signal, n=SAMPLE_RATE)
         spectrum = np.abs(fft)
         f = np.linspace(0, sample_rate, len(spectrum))
-        print(f.shape)
         return f
 
     @staticmethod
     def extract_stft_features(audio):
         signal, sample_rate = librosa.load(audio, sr=SAMPLE_RATE)
-        stft = librosa.stft(signal, n_fft=int(WINDOW_SIZE * SAMPLE_RATE), hop_length=int(HOP_SIZE * SAMPLE_RATE))
-        print(stft.shape)
+        hop_length = 512
+        n_fft = 2048
+        hop_length_duration = float(hop_length)/SAMPLE_RATE
+        n_fft_duration = float(n_fft)/SAMPLE_RATE
+        stft = np.abs(librosa.stft(signal, n_fft=n_fft, hop_length=hop_length))
+        if stft.shape[1]<40:
+            stft = [list(np.append(x, np.zeros(40-len(x)))) for x in stft]
+        else:
+            stft = stft[:40]
         return stft
 
     @staticmethod
@@ -111,10 +117,9 @@ class AudioService:
 
     @staticmethod
     def predictScipy(signal, modelPath):
-        print(modelPath)
         model = joblib.load(modelPath)
         value = model.predict(signal)
-        print(value)
+
         return valueS
 
     @staticmethod

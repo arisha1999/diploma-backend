@@ -37,6 +37,4 @@ def send_audio():
         result = AudioService.predict(features, model_path, libType)
         results.append(result)
 
-    # results = ['bed', 'one']
-
     return jsonify(' '.join(results)), 200
