@@ -149,14 +149,13 @@ class AudioService:
             return features
         elif dataType == 'fcc':
             features = np.array(AudioService.extract_fcc_features(audio)).reshape(1,-1)
-            print(features.shape)
             return features
         elif dataType == 'fft':
-            features = np.array(AudioService.extract_fft_features(audio)).reshape(-1,1)
-            print(features.shape)
+            features = np.array(AudioService.extract_fft_features(audio)).reshape(1,-1)
             return features
         elif dataType == 'stft':
             features = AudioService.extract_stft_features(audio)
+            features = np.array(features).ravel().reshape(1, -1)
             return features
 
     @staticmethod
